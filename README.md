@@ -81,7 +81,7 @@ We haven't found another tool that does all of these together. Ares runs Claude 
 - **Splitting the code first finds 6× more.** In one study, the same model found 3 of 30 access-control bugs when it explored freely, and 18 of 30 when sent through the code one route at a time. Ares maps the code into parts, gives each hunter its entry points and what they must guarantee, and checks the map against git so no file is skipped.
 - **Agreement isn't proof.** Ten AI reviewers once agreed on a bug that didn't exist; one test run disproved it. Ares counts a bug as proven only when a test fails for the stated reason, a control test passes, and both still hold when plain code runs them a second time.
 - **Most misses are the right place with the wrong cause.** In a benchmark of 265 real bugs, 68% of misses were in the right file. When a verifier rejects a finding, it can name the real bug beside it, and Ares verifies that too.
-- **One model shares one set of blind spots.** Codex and Gemini hunt alongside Claude when they're installed, and every finding from every source goes through the same verification.
+- **One model has one set of blind spots.** If Codex or Gemini is installed and signed in, Ares starts it and tells it to hunt for bugs alongside Claude. Every finding from every source goes through the same verification.
 - **Finding and checking are separate jobs.** Hunters report anything plausible. Verifiers assume each finding is wrong. An agent asked to do both quietly drops real bugs.
 
 The full reasoning and sources are in [DESIGN.md](DESIGN.md). How many bugs Ares catches is not measured yet; `/ares selftest` is how it will be.
@@ -94,7 +94,7 @@ Ares runs every tool that is installed and tells you which ones it skipped.
 | --- | --- |
 | Ares agents | The hunt and the proofs |
 | Claude Security | A second, independent security review by Anthropic |
-| Codex, Gemini | Reviewers from other companies' models, so one model's blind spots don't decide the result |
+| Codex, Gemini | If installed and signed in, Ares starts them and tells them to hunt for bugs in your code. Their findings are checked like any other |
 | Semgrep | Known patterns of unsafe code |
 | Gitleaks | Passwords and keys committed to the repository |
 | OSV-Scanner | Dependencies with known security problems |
@@ -145,7 +145,7 @@ uv tool install semgrep
 claude plugin install claude-security@claude-plugins-official
 ```
 
-To add Codex or Gemini, install their command-line tools and sign in. Ares then sends the code it reviews to those companies.
+To add Codex or Gemini, install their command-line tools and sign in. Ares starts them by itself on every review, and sends the code it reviews to those companies. Skip them with `no-other-models`.
 
 ## Use
 

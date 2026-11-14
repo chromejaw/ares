@@ -54,7 +54,7 @@ Ares was rebuilt after reading the published evidence on how models find real bu
 
 **Scanners give leads, not findings.** Pattern scanners are noisy. Their flags go to hunters to check against the code. Committed secrets and vulnerable dependencies are facts, so they go straight into the report.
 
-**Other companies' models.** Every Ares agent is Claude, so a mistake Claude tends to make could pass both the hunter and the verifier. Codex and Gemini hunt too when they're installed and signed in. This sends the reviewed code to those companies, so it only happens if you've set those tools up.
+**Other companies' models.** Every Ares agent is Claude, so a mistake Claude tends to make could pass both the hunter and the verifier. If Codex or Gemini is installed and signed in, Ares starts it on its own, in read-only mode on the copy of your code, and tells it to hunt for bugs and reply with a list. Those findings go through the same verification as everyone else's. This sends the reviewed code to those companies, so it only happens if you've set those tools up, and `no-other-models` turns it off.
 
 **Claude Security runs unmodified.** Its licence allows running it but not copying it, so Ares runs it in its own session inside the snapshot and reads its results file. Its workflow isn't called directly, because it changes between releases.
 
